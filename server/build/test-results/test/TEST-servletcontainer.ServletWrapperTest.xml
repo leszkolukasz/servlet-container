@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="servletcontainer.ServletWrapperTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:10:07" hostname="IdeaPadFlex" time="0.002">
-  <properties/>
-  <testcase name="getRelativeUrl()" classname="servletcontainer.ServletWrapperTest" time="0.0"/>
-  <testcase name="matches()" classname="servletcontainer.ServletWrapperTest" time="0.0"/>
-  <testcase name="matchesRelative()" classname="servletcontainer.ServletWrapperTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="servletcontainer.AsyncServletTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:09:04" hostname="IdeaPadFlex" time="10.307">
-  <properties/>
-  <testcase name="testAsyncServletTimeout()" classname="servletcontainer.AsyncServletTest" time="4.795"/>
-  <testcase name="testAsyncServlet()" classname="servletcontainer.AsyncServletTest" time="5.51"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

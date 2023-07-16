@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="servletcontainer.RequestDispatcherImpTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:09:45" hostname="IdeaPadFlex" time="0.228">
-  <properties/>
-  <testcase name="forward()" classname="servletcontainer.RequestDispatcherImpTest" time="0.22"/>
-  <testcase name="include()" classname="servletcontainer.RequestDispatcherImpTest" time="0.007"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

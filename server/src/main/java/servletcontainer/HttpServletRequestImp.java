@@ -17,8 +17,8 @@ public class HttpServletRequestImp implements HttpServletRequest {
     final private String method;
     HttpServletResponseImp httpServletResponse;
     Map<String, String> headers;
-    Map<String, Object> attributes; // used for data transfer between servlets
-    Map<String, String> parameters; // in POST these are body parameters
+    Map<String, Object> attributes; // Used for data transfer between servlets.
+    Map<String, String> parameters; // In POST these are body parameters.
     Map<String, String> queryParameters;
     AsyncContextImp asyncContext;
     private String url;
