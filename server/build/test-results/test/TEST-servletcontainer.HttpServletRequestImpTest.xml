@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="servletcontainer.HttpServletRequestImpTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:09:14" hostname="IdeaPadFlex" time="1.488">
+  <properties/>
+  <testcase name="getUrl()" classname="servletcontainer.HttpServletRequestImpTest" time="1.469"/>
+  <testcase name="getMethod()" classname="servletcontainer.HttpServletRequestImpTest" time="0.005"/>
+  <testcase name="getQueryParameter()" classname="servletcontainer.HttpServletRequestImpTest" time="0.004"/>
+  <testcase name="getParameter()" classname="servletcontainer.HttpServletRequestImpTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

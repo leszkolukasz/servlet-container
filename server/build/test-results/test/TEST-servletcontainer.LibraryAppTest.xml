@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="servletcontainer.LibraryAppTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:09:16" hostname="IdeaPadFlex" time="28.428">
+  <properties/>
+  <testcase name="bookDeleteGET()" classname="servletcontainer.LibraryAppTest" time="4.206"/>
+  <testcase name="bookAddPOST()" classname="servletcontainer.LibraryAppTest" time="4.121"/>
+  <testcase name="bookUpdatePOST()" classname="servletcontainer.LibraryAppTest" time="4.119"/>
+  <testcase name="bookUpdateGET()" classname="servletcontainer.LibraryAppTest" time="3.989"/>
+  <testcase name="bookDeletePOST()" classname="servletcontainer.LibraryAppTest" time="3.994"/>
+  <testcase name="bookAddGET()" classname="servletcontainer.LibraryAppTest" time="3.994"/>
+  <testcase name="bookShow()" classname="servletcontainer.LibraryAppTest" time="3.999"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: bookShow.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+]]></system-err>
+</testsuite>

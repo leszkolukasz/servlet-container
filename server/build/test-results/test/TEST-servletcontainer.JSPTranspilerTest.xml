@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="servletcontainer.JSPTranspilerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-24T19:09:16" hostname="IdeaPadFlex" time="0.739">
+  <properties/>
+  <testcase name="transpile()" classname="servletcontainer.JSPTranspilerTest" time="0.739"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
