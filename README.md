@@ -11,6 +11,8 @@ I did not find many other small implementations of servlet containers so feel fr
 
 The idea is that this container works in similar manner as tomcat. You can add servlet classes using ServletContainer::addRoute but preferred way it to use component scanning functionality. That is if application is packed into `warName.war` file and placed in `deploy` directory inside `server/src/main/resources` it will be loaded on server start and available under `localhost:8000/warName`.
 
+By default server runs on port 8000. It can be changed in `Main` function. This function also contains example of how to start and configure this server.
+
 ## How to run
 
 Project was build using Gradle. It contains two subprojects: server and demo application (simple book database). It was tested under Linux and I do not know if it even works under Windows/MacOS.
@@ -28,49 +30,63 @@ Starting server requires us to create instance of `ServletContainer`.
 ### `ServletContainer(int threads)`
 Creates new isntance of `ServletContainer`. with given number of threads used to create ThreadPool. This pool will be used to handle http requests.
 
-### `ServletContainer::start(int port)`
+### `void ServletContainer::start(int port)`
 
 Starts servlet container on given port. Keep in mind that .war files are not loaded at this point. They are only loaded when `ServletContainer:servletScan` is called.
 
-### `ServletContainer::stop()`
+### `void ServletContainer::stop()`
 
 Gracefully stops container.
 
-### `ServletContainer::servletScan()`
+### `void ServletContainer::servletScan()`
 
-Loads all .war files from `deploy` directory inside `server/src/main/resources`. It will load .jsp files as well and immediately transpile them into .class files. One caveat is that .war files I use have a specific directory structure that I am not so sure is the same as in most other .war files. You can check `war` gradle task in demo application to see what this structure should look like. This should be called at most once before start() method.
+Loads all .war files from `deploy` directory inside `server/src/main/resources`. It will load .jsp files as well and immediately transpile them into .class files. Only classes annotated with `@WebServlet` will be loaded. One caveat is that .war files I use have a specific directory structure that I am not so sure is the same as in most other .war files. You can check `war` gradle task in demo application to see what this structure should look like. This should be called at most once before start() method.
 
-### `ServletContainer::servletScan(String url)`
+### `void ServletContainer::servletScan(String url)`
 
 Same as `ServletContainer::servletScan()` but can loads .war files from given url.
 
-## Funkcjonalność
+### `void ServletContainer::addRoute(Class<? extends HttpServlet> cls, String path)`
 
-Domyślnie serwer startuje na porcie 8000. Można zmienić w funkcji Main. Serwer wspiera graceful shutdown po wykonaniu ServletContainer::stop. 
+Adds servlet to container. Servlet will only handle given url (see **URL resolution** paragraph for more details).
 
-### Wielowątkowość
+## Features
 
-Serwer wspiera obsługę wielu klientów kilkoma wątkami. Domyślnie wykorzystywany jest ThreadPool rozmiaru 4. Rozmiar można zmienić w funkcji Main.
+### Multithread support
+
+The server supports concurrent handling of multiple clients at once. Each client will be handled by seperate thread from ThreadPool. Default pool size is 4 and can be changed in `Main` function.
 
 ### HttpServlet
 
-Serwer obłsugue dowolną klasę dziedziczącą po HttpServlet. Taką klasę można dodać korzystając z ServletManager::addServlet(cls, url).
+The server will support any class that inherits from HttpServlet. Such a class can be added using `ServletContainer::addRoute`.
 
-### HttpServletRequest i HttpServletResponse
+### HttpServletRequest and HttpServletResponse
 
-Najważniejsze funkcjonalności tych klas są zaimplementowane. Można pisać do klienta przy użyciu PrintWriter, ustawiać headery, status odpowiedzi. HttpServletRequest potrafi wyciągnąć url requesta, metodę HTTP (GET, POST, DELETE, PATCH), query parameters i parametry z body (w przypadku POSTa). Dane są wysyłane do klienta po zflushowaniu bufora lub zamknięciu HttpServletResponse. Za pomocą RequestDispatchera można wysyłać zapytania do innych servletów w tym sevletów JSP.
+The most important functionalities of these classes are implemented. You can write to the client using (only) `PrintWriter`, set headers, response status. HttpServletRequest can extract the request url, HTTP method (GET, POST, DELETE, PATCH), query parameters and parameters from the body (in the case of POST). Data is sent to the client after flushing the buffer or closing the `HttpServletResponse`. Using `RequestDispatcher`, you can send queries to other servlets including JSP sevlets.
 
 ### Async Servlet
 
-Jest wsparcie dla async servletów. Po wykonaniu HttpServletRequest::startAsync request przechodzi w tryb asynchroniczny. Są dwie możliwości korzystania z tego trybu. Dowolny kod będzie działał tak długo jak kiedyś wykona się AsyncContext::complete, które kończy połącznie z klientem (w tym można korzystać z async-http-client). Można również korzystać z AsyncConext::start(Runnable), tutaj też trzeba wykonać AsyncContext::complete. To drugie jest zgodne z Java API. Wspiera też timeout i AsyncListener.
+There is support for async servlets. After `HttpServletRequest::startAsync` is executed, the request goes into asynchronous mode. There are two ways to use this mode. Any code will run as long as `AsyncContext::complete` is executed at some point, which terminates the connection to the client. You can also use `AsyncConext::start(Runnable)`, here you also need to execute `AsyncContext::complete` at some point. The latter is compatible with the Java Servlet API. It also supports timeout (`AsyncContext::setTimeout`) and `AsyncListener`. Async servlets are implemented using `CompletableFuture` so they will use ThreadPool seperate from the one used for synchronous clients.
 
 ### Component scanning
 
-Jesli aplikacja została zapakowana do war i przeniesiona do folderu `deploy` będzie automatycznie załadowana. Wszystkie klasy z annotacją WebServlet i dziedziczące po HttpServlet będą dodane servlet containera i będą dostępne pod `localhost:port/warName/classUrl`. Każda taka klasa musi mieć co najmniej jeden `classUrl` wyspecyfikowany w annotacji WebServlet w atrybucie value. Jeśli aplikacja korzysta z JSP będzie ono automatycznie skopilowane do .class i załadowane.
+If the application has been zipped into .war and moved to the `deploy` folder, it will be loaded automatically. All classes annotated with `@WebServlet` and inheriting from `HttpServlet` will be added to the servlet container and will be available at `localhost:port/warName/servletUrl`. Each such class must have exactly one `servletUrl` specified in the `@WebServlet` annotation in the value attribute. If the application uses JSP it will be automatically compiled into .class and loaded.
 
 ### JSP
 
-Serwer potrafi transpilować pliki .jsp do .class. Jest wparcie dla prawie całego syntaxa w JSP. Można korzystać z ```<%@ page import/include=... %>, <% ... %>, <%! ... %>, <%= ... %>, <%-- %>, ${...}```. ```${}``` pozwala na korzystanie z Expression Language. Można wykonywać proste operacje arytmetyczne, a także wszelkie wyrażenia postaci insatnce.property1.property2 będzie zamieniane na request.getAttribute("instance").getProperty1().getProperty2(). W ```<% ... %>``` działa też syntax ```out.println(...)```, który pisze bezposrednio do klienta. JSP można wyświetlać za pomocą RequestDispatcher::forward lub dostępne jest bezpośrednio pod adresem `localhost:8000/warName/jspFileName.jsp`. Przykładowe działanie jsp jest dostępne pod adresem `localhost:8000/library/hello`.
+The server can transpile .jsp files to .class. There is support for almost all syntax in JSP. That includes:
+
+- `<%@ page import/include=... %>`
+- `<% ... %>`
+- `<%! ... %>`
+- `<%= ... %>`
+- `<%-- %>`
+- `${...}`
+
+`${}` syntax supports Expression Language. Simple arithmetic operations can be performed, and any expression of the form `instance.property1.property2` will be converted to `request.getAttribute("instance").getProperty1().getProperty2()`. In `<% ... %>` there is also `out.println(...)` which writes directly to the client. JSP can be displayed using `RequestDispatcher::forward` or is available directly at `localhost:8000/warName/jspFileName.jsp`. A sample jsp action is available at `localhost:8000/library/jsp`. Keep in mind that I implemented parsing myself so weird code formatting/syntax may break it.
+
+### FAQ
+why do everything manually
 
 ## Aplikacja bilbioteczna
 
