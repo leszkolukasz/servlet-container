@@ -3,7 +3,13 @@
 ![license](https://img.shields.io/github/license/leszkolukasz/servlet-container?colorA=192330&colorB=c70039&style=for-the-badge)
 ![status](https://img.shields.io/badge/status-finished-green?colorA=192330&colorB=00e600&style=for-the-badge)
 
-Servlet container działający podobnie jak Tomcat. Aplikacja musi być zapakowana do .war i przeniesiona do folderu `deploy` w  `server/src/main/resources`. Aplikacja będzie dostępna pod `localhost:8000/warName/`.
+This is a project that was created as part of a course I took at University of Warsaw. It is a simple implementation of a servlet container that supports Java servlets compliant with Java Servlet API. Even though it is quite barebone, it can load and run simple applications that use basic functionalities of servlets including dispatching, jsp and async servlets.
+
+I did not find many other small implementations of servlet containers so feel free to use this as an example of how to create container like this. Keep in mind that due to time resctrictions it is a pretty imperfect, buggy project and while I tried to remain faithful to Servlet API I took some liberties here and there.
+
+## Assumptions
+
+The idea is that this container works in similar manner as tomcat. You can add servlet classes using ServletContainer::addRoute but preferred way it to use component scanning functionality. That is if application is packed into `warName.war` file and placed in `deploy` inside `server/src/main/resources` it will be loaded on server start and available under `localhost:8000/warName/`.
 
 ## Funkcjonalność
 
