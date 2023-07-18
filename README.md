@@ -85,18 +85,23 @@ The server can transpile .jsp files to .class. There is support for almost all s
 
 `${}` syntax supports Expression Language. Simple arithmetic operations can be performed, and any expression of the form `instance.property1.property2` will be converted to `request.getAttribute("instance").getProperty1().getProperty2()`. In `<% ... %>` there is also `out.println(...)` which writes directly to the client. JSP can be displayed using `RequestDispatcher::forward` or is available directly at `localhost:8000/warName/jspFileName.jsp`. A sample jsp action is available at `localhost:8000/library/jsp`. Keep in mind that I implemented parsing myself so weird code formatting/syntax may break it.
 
-## Aplikacja bilbioteczna
+## Demo application
 
-Do zaprezentowania działania serwera zaimplementowałem aplikacje biblioteczną. Frontend tworzony jest w pełni przy pomocy JSP. Aplikacja zapakowana jest do library.war i jest ładowana do serwera po jego uruchomieniu. Dostępne endpointy:
+To demononstrate servlet container, I implemented a simple application that simulates book database. Books can be added, removed, updated using HTML forms. All book can also be viewed in HTML table. The frontend is fully developed using JSP. The application is zipped into library.war using `war` gradle task, moved to `deploy` and loaded to the server when it starts.
 
-- **/library/books/show (GET)** - wypisuje wszystkie ksiażki
-- **/library/books/add (GET/POST)** - dodaje nową książke
-- **/library/books/update?id= (GET/POST)** - updatuje ksiązke o danym id
-- **/library/books/delete (GET/POST)** - usuwa ksiązke
+Endpoints:
 
-## Testy
+- **/library/books/show (GET)** - lists all books
+- **/library/books/add (GET/POST)** - adds new book
+- **/library/books/update?id= (GET/POST)** - updates book with given id
+- **/library/books/delete (GET/POST)** - removed book
 
-Jest ponad 30 testów sprawdzających większość funkcjonalności i aplikację biblioteczną.
+## Tests
+
+There are over 30 tests to check most of the functionality and the demo application. It is preferred to run them from Intellij due to problems explained in **FAQ**. Alternatively they can be run using:
+```
+../gradlew test
+```
 
 ## FAQ
 
