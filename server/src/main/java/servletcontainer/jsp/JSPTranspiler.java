@@ -1,4 +1,4 @@
-package servletcontainer;
+package servletcontainer.jsp;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -102,10 +102,7 @@ public class JSPTranspiler {
         options.add(appDir.getAbsolutePath());
         options.add("-cp");
 
-        String classpaths = "server/src/main/java:" +
-                "server/src/main/resources:" +
-                "server/src/main/resources/servlet-api.jar:" +
-                // For tests
+        String classpaths = "src/main/java:" +
                 "src/main/java:" +
                 "src/main/resources:" +
                 "src/main/resources/servlet-api.jar:" +

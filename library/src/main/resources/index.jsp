@@ -19,9 +19,10 @@ ${2023 + (114 - 2) / 4 * 2 + 58}
 <h1>Scriplet tag</h1>
 
 <% List<Integer> l = new ArrayList<>();
-    l.add(10);
-    l.add(20);
-    l.add(30);
+    l.add(2);
+    l.add(1);
+    l.add(3);
+    l.add(7);
     out.println(l.get(0));
     out.println(l.size());
 %>
@@ -36,7 +37,7 @@ ${2023 + (114 - 2) / 4 * 2 + 58}
 
 <h1> Mixed </h1>
 <% for (int i = 0; i < 5; i++) {%>
-<%= i - 1 %> <br>
+<%= i %> <br>
 <% } %>
 </body>
 </html>

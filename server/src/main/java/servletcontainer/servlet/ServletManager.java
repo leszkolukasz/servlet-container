@@ -1,5 +1,6 @@
-package servletcontainer;
+package servletcontainer.servlet;
 
+import servletcontainer.http.HttpServletDelegator;
 import servletcontainer.routes.DefaultServlet;
 import servletcontainer.routes.TimeoutServlet;
 
@@ -29,6 +30,7 @@ public class ServletManager {
         servlets.add(new ServletWrapper(cls, url));
     }
 
+    // Finds servlet that is best match for `url`.
     public synchronized HttpServletDelegator getServlet(String url) {
         var wrapper = getServletWrapper(url);
         return wrapper == null ? null : wrapper.getServlet();

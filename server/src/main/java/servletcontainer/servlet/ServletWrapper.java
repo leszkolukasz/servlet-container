@@ -1,11 +1,14 @@
-package servletcontainer;
+package servletcontainer.servlet;
+
+import servletcontainer.http.HttpServletDelegator;
 
 import javax.servlet.http.HttpServlet;
 import java.lang.reflect.InvocationTargetException;
 
+// Contains metadata about servlet like its url.
 public class ServletWrapper {
-    final private Class<? extends HttpServlet> cls;
-    final private String url;
+    private final Class<? extends HttpServlet> cls;
+    private final String url;
     private HttpServletDelegator instance;
 
     public ServletWrapper(Class<? extends HttpServlet> cls, String url) {

@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import servletcontainer.http.HttpServletRequestImp;
+import servletcontainer.servlet.ServletManager;
 
 import static org.mockito.Mockito.*;
 

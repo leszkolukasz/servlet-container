@@ -19,7 +19,6 @@ public class BookUpdate extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         int id = Integer.parseInt(request.getParameter("id"));
         Book book = db.getById(id);
         request.setAttribute("book", book);
@@ -33,7 +32,6 @@ public class BookUpdate extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String author = request.getParameter("author");

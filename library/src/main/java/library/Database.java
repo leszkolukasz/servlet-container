@@ -23,28 +23,28 @@ public class Database {
 
     public synchronized void delete(int id) {
         int idx = -1;
-        for(int i = 0; i < books.size(); i++)
+        for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getId() == id) {
                 idx = i;
                 break;
             }
+        }
 
         if (idx != -1)
             books.remove(idx);
     }
 
     public synchronized Book getById(int id) {
-        for(int i = 0; i < books.size(); i++)
-            if (books.get(i).getId() == id) {
-                return books.get(i);
-            }
+        for (Book book : books)
+            if (book.getId() == id)
+                return book;
+
         return null;
     }
 
     public synchronized void update(int id, String name, String author) {
-        for(int i = 0; i < books.size(); i++)
-            if (books.get(i).getId() == id) {
+        for (int i = 0; i < books.size(); i++)
+            if (books.get(i).getId() == id)
                 books.set(i, new Book(id, name, author));
-            }
     }
 }

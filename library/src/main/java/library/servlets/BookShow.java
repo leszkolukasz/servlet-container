@@ -12,17 +12,16 @@ import javax.servlet.http.*;
 
 @WebServlet(value = "/books/show")
 public class BookShow extends HttpServlet {
-    private Database db;
+    private final Database db;
     public BookShow() {
         db = new Database();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         List<Book> books = db.getAll();
-
         request.setAttribute("books", books);
+
         try {
             request.getRequestDispatcher("/bookShow.jsp").forward(request, response);
         } catch (ServletException | IOException e) {

@@ -1,4 +1,7 @@
-package servletcontainer;
+package servletcontainer.http;
+
+import servletcontainer.servlet.ServletManager;
+import servletcontainer.async.AsyncContextImp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,33 +15,39 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class HttpServletRequestImp implements HttpServletRequest {
-    final Socket client;
-    final ServletManager servletManager;
-    final private String method;
-    HttpServletResponseImp httpServletResponse;
-    Map<String, String> headers;
-    Map<String, Object> attributes; // Used for data transfer between servlets.
-    Map<String, String> parameters; // In POST these are body parameters.
-    Map<String, String> queryParameters;
-    AsyncContextImp asyncContext;
+    private final Socket client;
+    private final ServletManager servletManager;
+    private final Map<String, String> headers;
+    private final Map<String, Object> attributes; // Used for data transfer between servlets.
+    private final Map<String, String> parameters; // In POST these are body parameters.
+    private final Map<String, String> queryParameters;
+
+    private HttpServletResponseImp httpServletResponse;
+    private AsyncContextImp asyncContext;
     private String url;
+    private String httpMethod;
+
     private boolean isAsync = false;
 
     public HttpServletRequestImp(Socket client, ServletManager servletManager) {
         this.client = client;
         this.servletManager = servletManager;
 
+        attributes = new HashMap<>();
+        headers = new HashMap<>();
+        parameters = new HashMap<>();
+        queryParameters = new HashMap<>();
+
+        parseHttpRequest();
+    }
+
+    private void parseHttpRequest() {
         try {
             var in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
             String line = in.readLine();
-            method = line.split(" ")[0];
+            httpMethod = line.split(" ")[0];
             setUrl(line.split(" ")[1]);
-
-            attributes = new HashMap<>();
-            headers = new HashMap<>();
-            parameters = new HashMap<>();
-            queryParameters = new HashMap<>();
 
             int questionMarkIndex = url.indexOf('?');
             if (questionMarkIndex != -1) {
@@ -91,7 +100,7 @@ public class HttpServletRequestImp implements HttpServletRequest {
 
     @Override
     public String getMethod() {
-        return method;
+        return httpMethod;
     }
 
     @Override
@@ -466,7 +475,10 @@ public class HttpServletRequestImp implements HttpServletRequest {
         }
 
         isAsync = true;
-        asyncContext = new AsyncContextImp((HttpServletRequest) request, (HttpServletResponse) response);
+        asyncContext = new AsyncContextImp(
+                (HttpServletRequest) request,
+                (HttpServletResponse) response
+        );
         return asyncContext;
     }
 

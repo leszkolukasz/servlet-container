@@ -6,10 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
-@WebServlet(
-        value = "/hello"
-)
-public class Home extends HttpServlet {
+@WebServlet(value = "/jsp")
+public class JspTest extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {

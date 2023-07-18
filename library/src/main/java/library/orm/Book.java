@@ -1,9 +1,9 @@
 package library.orm;
 
 public class Book {
-    private int id;
-    private String name;
-    private String author;
+    private final int id;
+    private final String name;
+    private final String author;
 
     public Book(int id, String name, String author)
     {
@@ -11,7 +11,6 @@ public class Book {
         this.name = name;
         this.author = author;
     }
-
 
     public int getId() {
         return id;

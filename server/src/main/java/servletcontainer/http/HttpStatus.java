@@ -1,4 +1,4 @@
-package servletcontainer;
+package servletcontainer.http;
 
 public enum HttpStatus {
     // 1xx Informational

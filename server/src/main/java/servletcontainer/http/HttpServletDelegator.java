@@ -1,10 +1,12 @@
-package servletcontainer;
+package servletcontainer.http;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+// Wrapper for HttpServlet with a similar interface as HttpServlet.
+// It is mainly necessary for more control over `service` method.
 public class HttpServletDelegator {
     final private HttpServlet httpServlet;
 

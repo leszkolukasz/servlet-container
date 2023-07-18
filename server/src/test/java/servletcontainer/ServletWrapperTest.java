@@ -1,6 +1,7 @@
 package servletcontainer;
 
 import org.junit.jupiter.api.Test;
+import servletcontainer.servlet.ServletWrapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebServlet(value = "/books/delete")
 public class BookDelete extends HttpServlet {
-    private Database db;
+    private final Database db;
 
     public BookDelete() {
         db = new Database();
@@ -17,7 +17,6 @@ public class BookDelete extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         try {
             request.getRequestDispatcher("/bookDelete.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
@@ -27,7 +26,6 @@ public class BookDelete extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-
         int id = Integer.parseInt(request.getParameter("id"));
 
         db.delete(id);

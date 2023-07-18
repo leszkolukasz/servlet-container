@@ -1,4 +1,8 @@
-package servletcontainer;
+package servletcontainer.servlet;
+
+import servletcontainer.http.HttpServletRequestImp;
+import servletcontainer.http.HttpServletResponseImp;
+import servletcontainer.jsp.JSPTranspiler;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,13 +20,14 @@ import java.util.List;
 
 public class ServletContainer {
     // Directory with war files
-    private String DEPLOY_URL = "server/src/main/resources/deploy";
-    final private ExecutorService executor;
-    final private ServletManager servletManager;
-    final private JSPTranspiler jspTranspiler;
+    private String DEPLOY_URL = "src/main/resources/deploy";
+    private final ExecutorService executor;
+    private final ServletManager servletManager;
+    private final JSPTranspiler jspTranspiler;
+
     private int port;
     private ServerSocket serverSocket;
-    private boolean finish;
+    private boolean finish; // For graceful shutdown.
 
     public ServletContainer(int threads) {
         this.servletManager = new ServletManager();
@@ -48,8 +53,7 @@ public class ServletContainer {
                         e.printStackTrace();
                     }
                 });
-            } catch (SocketTimeoutException ignored) {
-            }
+            } catch (SocketTimeoutException ignored) {}
         }
     }
 
@@ -61,16 +65,20 @@ public class ServletContainer {
         servletManager.addServlet(cls, path);
     }
 
-    public void servletScan(String url) {
-        if (url != null)
-            DEPLOY_URL = url;
-
+    public void servletScan() {
         unzipWarFiles();
 
         compileJSP();
         loadClasses();
 
         removeUnzippedFiles();
+    }
+
+    public void servletScan(String url) {
+        if (url != null)
+            DEPLOY_URL = url;
+
+        servletScan();
     }
 
     private void compileJSP() {

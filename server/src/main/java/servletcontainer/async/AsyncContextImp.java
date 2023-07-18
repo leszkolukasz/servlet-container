@@ -1,4 +1,7 @@
-package servletcontainer;
+package servletcontainer.async;
+
+import servletcontainer.http.HttpServletRequestImp;
+import servletcontainer.http.HttpServletResponseImp;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class AsyncContextImp implements AsyncContext {
-    final private List<AsyncListenerWrapper> listeners;
+    private final static long DEFAULT_TIMEOUT = 30000; // 30 seconds
+
+    private final List<AsyncListenerWrapper> listeners;
     private HttpServletRequestImp request;
     private HttpServletResponseImp response;
     private long timeout;
@@ -20,7 +25,7 @@ public class AsyncContextImp implements AsyncContext {
         this.request = (HttpServletRequestImp) request;
         this.response = (HttpServletResponseImp) response;
         this.listeners = new ArrayList<>();
-        this.timeout = 30000;
+        this.timeout = DEFAULT_TIMEOUT;
     }
 
     @Override

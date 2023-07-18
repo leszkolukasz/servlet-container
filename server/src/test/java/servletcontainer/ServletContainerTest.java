@@ -2,6 +2,7 @@ package servletcontainer;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import servletcontainer.servlet.ServletContainer;
 import servletcontainer.servlets.SlowServlet;
 
 import java.io.IOException;

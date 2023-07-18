@@ -1,4 +1,6 @@
-package servletcontainer;
+package servletcontainer.http;
+
+import servletcontainer.servlet.ServletWrapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;

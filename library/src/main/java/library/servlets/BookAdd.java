@@ -9,14 +9,13 @@ import java.io.IOException;
 
 @WebServlet(value = "/books/add")
 public class BookAdd extends HttpServlet {
-    private Database db;
+    private final Database db;
     public BookAdd() {
         db = new Database();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         try {
             request.getRequestDispatcher("/bookAdd.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
@@ -26,7 +25,6 @@ public class BookAdd extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-
         String name = request.getParameter("name");
         String author = request.getParameter("author");
 

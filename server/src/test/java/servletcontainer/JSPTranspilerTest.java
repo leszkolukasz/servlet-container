@@ -6,6 +6,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import servletcontainer.http.HttpServletDelegator;
+import servletcontainer.http.HttpServletRequestImp;
+import servletcontainer.http.HttpServletResponseImp;
+import servletcontainer.jsp.JSPTranspiler;
 
 import javax.servlet.http.HttpServlet;
 import java.io.ByteArrayOutputStream;

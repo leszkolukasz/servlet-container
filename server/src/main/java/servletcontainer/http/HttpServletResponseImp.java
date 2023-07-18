@@ -1,4 +1,4 @@
-package servletcontainer;
+package servletcontainer.http;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -17,12 +17,16 @@ public class HttpServletResponseImp implements HttpServletResponse {
 
     // Accumulates data. Data is sent to client only when buffer is flushed
     // or HttpServletResponse is closed.
-    final private StringWriter buffer;
-    final private PrintWriter bufferWriter;
-    final private PrintWriter clientOutputStream;
+    private final StringWriter buffer;
+    private final PrintWriter bufferWriter;
+    private final PrintWriter clientOutputStream;
     private final Map<String, String> headers;
+
     private HttpStatus httpStatus = HttpStatus.OK; // Default http status is 200.
     private boolean bufferFlushed = false;
+
+    // This is only needed when RequestDispatcher is called with method `include`.
+    // Included servlets cannot change headers.
     private boolean headerLocked = false;
 
     public HttpServletResponseImp(Socket client) throws IOException {
