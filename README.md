@@ -9,7 +9,40 @@ I did not find many other small implementations of servlet containers so feel fr
 
 ## Assumptions
 
-The idea is that this container works in similar manner as tomcat. You can add servlet classes using ServletContainer::addRoute but preferred way it to use component scanning functionality. That is if application is packed into `warName.war` file and placed in `deploy` inside `server/src/main/resources` it will be loaded on server start and available under `localhost:8000/warName/`.
+The idea is that this container works in similar manner as tomcat. You can add servlet classes using ServletContainer::addRoute but preferred way it to use component scanning functionality. That is if application is packed into `warName.war` file and placed in `deploy` directory inside `server/src/main/resources` it will be loaded on server start and available under `localhost:8000/warName`.
+
+## How to run
+
+Project was build using Gradle. It contains two subprojects: server and demo application (simple book database). It was tested under Linux and I do not know if it even works under Windows/MacOS.
+
+To run server use:
+
+```
+./gradlew server:run
+```
+
+## API
+
+Starting server requires us to create instance of `ServletContainer`.
+
+### `ServletContainer(int threads)`
+Creates new isntance of `ServletContainer`. with given number of threads used to create ThreadPool. This pool will be used to handle http requests.
+
+### `ServletContainer::start(int port)`
+
+Starts servlet container on given port. Keep in mind that .war files are not loaded at this point. They are only loaded when `ServletContainer:servletScan` is called.
+
+### `ServletContainer::stop()`
+
+Gracefully stops container.
+
+### `ServletContainer::servletScan()`
+
+Loads all .war files from `deploy` directory inside `server/src/main/resources`. It will load .jsp files as well and immediately transpile them into .class files. One caveat is that .war files I use have a specific directory structure that I am not so sure is the same as in most other .war files. You can check `war` gradle task in demo application to see what this structure should look like. This should be called at most once before start() method.
+
+### `ServletContainer::servletScan(String url)`
+
+Same as `ServletContainer::servletScan()` but can loads .war files from given url.
 
 ## Funkcjonalność
 
