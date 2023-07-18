@@ -192,7 +192,7 @@ public class ServletContainer {
         return classNames;
     }
 
-    public void unzipWarFiles() {
+    private void unzipWarFiles() {
         File folder = new File(DEPLOY_URL);
         File[] files = folder.listFiles();
 
