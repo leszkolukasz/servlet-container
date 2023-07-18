@@ -40,7 +40,7 @@ Gracefully stops the container.
 
 ### `void ServletContainer::servletScan()`
 
-Loads all .war files from `deploy` directory inside `server/src/main/resources`. It will load .jsp files as well and immediately transpile them into .class files. Only classes annotated with `@WebServlet` will be loaded. One caveat is that .war files I use have a specific directory structure that I am not so sure is the same as in most other .war files. You can check `war` gradle task in demo application to see what this structure should look like. This should be called at most once before start() method.
+Loads all .war files from `deploy` directory inside `server/src/main/resources`. It will load .jsp files as well and immediately transpile them into .class files. Only classes annotated with `@WebServlet` will be loaded. One caveat is that .war files I use have a specific directory structure that I am not so sure is the same as in most other .war files. You can check `war` gradle task in demo application to see what this structure should look like. This method should be called at most once before start() method.
 
 ### `void ServletContainer::servletScan(String url)`
 
@@ -54,7 +54,7 @@ Adds servlet to the container. Servlet will only handle given url (see **FAQ** f
 
 ### Multithread support
 
-The server supports concurrent handling of multiple clients at once. Each client will be handled by seperate thread from ThreadPool. Default pool size is 4 and can be changed in `Main` function.
+The server supports concurrent handling of multiple clients at once. Each client will be handled by separate thread from ThreadPool. The default pool size is 4 and can be changed in `Main` function.
 
 ### HttpServlet
 
@@ -62,11 +62,11 @@ The server will support any class that inherits from HttpServlet. Such a class c
 
 ### HttpServletRequest and HttpServletResponse
 
-The most important functionalities of these classes are implemented. You can write to the client using (only) `PrintWriter`, set headers, response status. HttpServletRequest can extract the request url, HTTP method (GET, POST, DELETE, PATCH), query parameters and parameters from the body (in the case of POST). Data is sent to the client after flushing the buffer or closing the `HttpServletResponse`. Using `RequestDispatcher`, you can send queries to other servlets including JSP sevlets.
+The most important functionalities of these classes are implemented. You can write to the client using (only) `PrintWriter`, set headers and response status. HttpServletRequest can extract the request URL, HTTP method (GET, POST, DELETE, PATCH), query parameters and parameters from the body (in the case of POST). Data is sent to the client after flushing the buffer or closing the `HttpServletResponse`. Using `RequestDispatcher`, you can send queries to other servlets including JSP servlets.
 
 ### Async Servlet
 
-There is support for async servlets. After `HttpServletRequest::startAsync` is executed, the request goes into asynchronous mode. There are two ways to use this mode. Any code will run as long as `AsyncContext::complete` is executed at some point, which terminates the connection to the client. You can also use `AsyncConext::start(Runnable)`, here you also need to execute `AsyncContext::complete` at some point. The latter is compatible with the Java Servlet API. It also supports timeout (`AsyncContext::setTimeout`) and `AsyncListener`. Async servlets are implemented using `CompletableFuture` so they will use ThreadPool seperate from the one used for synchronous clients.
+There is support for async servlets. After `HttpServletRequest::startAsync` is executed, the request goes into asynchronous mode. There are two ways to use this mode. Any code will run as long as `AsyncContext::complete` is executed at some point, which terminates the connection to the client. You can also use `AsyncConext::start(Runnable)`, here you also need to execute `AsyncContext::complete` at some point. The latter is compatible with the Java Servlet API. It also supports timeout (`AsyncContext::setTimeout`) and `AsyncListener`. Async servlets are implemented using `CompletableFuture` so they will use ThreadPool separate from the one used for synchronous clients.
 
 ### Component scanning
 
@@ -83,11 +83,11 @@ The server can transpile .jsp files to .class. There is support for almost all s
 - `<%-- %>`
 - `${...}`
 
-`${}` syntax supports Expression Language. Simple arithmetic operations can be performed, and any expression of the form `instance.property1.property2` will be converted to `request.getAttribute("instance").getProperty1().getProperty2()`. In `<% ... %>` there is also `out.println(...)` which writes directly to the client. JSP can be displayed using `RequestDispatcher::forward` or is available directly at `localhost:8000/warName/jspFileName.jsp`. A sample jsp action is available at `localhost:8000/library/jsp`. Keep in mind that I implemented parsing myself so weird code formatting/syntax may break it.
+`${}` syntax partially supports Expression Language. Simple arithmetic operations can be performed, and any expression of the form `instance.property1.property2` will be converted to `request.getAttribute("instance").getProperty1().getProperty2()`. In `<% ... %>` there is also `out.println(...)` which writes directly to the client. JSP can be displayed using `RequestDispatcher::forward` or is available directly at `localhost:8000/warName/jspFileName.jsp`. A sample jsp action is available at `localhost:8000/library/jsp`. Keep in mind that I implemented parsing myself so weird code formatting/syntax may break it.
 
 ## Demo application
 
-To demononstrate servlet container, I implemented a simple application that simulates book database. Books can be added, removed, updated using HTML forms. All book can also be viewed in HTML table. The frontend is fully developed using JSP. The application is zipped into library.war using `war` gradle task, moved to `deploy` and loaded to the server when it starts.
+To demonstrate servlet container, I implemented a simple application that simulates a book database. Books can be added, removed and updated using HTML forms. All book can also be viewed in HTML table. The frontend is fully developed using JSP. The application is zipped into library.war using `war` gradle task, moved to `deploy` and loaded to the server when it starts.
 
 Endpoints:
 
@@ -98,7 +98,7 @@ Endpoints:
 
 ## Tests
 
-There are over 30 tests to check most of the functionality and the demo application. It is preferred to run them from Intellij due to problems explained in **FAQ**. Alternatively they can be run using:
+There are over 30 tests to check most of the functionality and the demo application. It is preferred to run them from Intellij due to problems explained in **FAQ**. Alternatively, they can be run using:
 ```
 ../gradlew test
 ```
@@ -109,10 +109,10 @@ There are over 30 tests to check most of the functionality and the demo applicat
    
 This project was part of a university course and I was not allowed to use any 3rd party libraries except for Junit.
 
-### 2) Why some tests fail?
+### 2) Why do some tests fail?
 
-There are problems with socket ports being already in use. I never got down to fixing it but most of the time is works when run from Intellij.
+There are problems with socket ports being already in use. I never got down to fix it but most of the time it works when run from Intellij.
 
-### 3) Why it is possible for servlet to handle url that it should not handle?
+### 3) Why it is possible for a servlet to handle url that it should not handle?
 
-Right now resolution of which servlet should handle given url is quite primimitive. Basically given `url` server looks for servlet whose `servletUrl` is a prefix of `url`. If there are many the one with longest match is selected. This means that if servlet has `servletUrl` equal to `/app/home` it will also handle `/app/home/nonexisting/`, `/app/home/12345` etc.
+Right now the resolution of which servlet should handle the given url is quite primitive. Basically given `url` server looks for a servlet whose `servletUrl` is a prefix of `url`. If there are many the one with the longest prefix is selected. This means that if a servlet has `servletUrl` equal to `/app/home` it will also handle `/app/home/nonexisting/`, `/app/home/12345` etc.
