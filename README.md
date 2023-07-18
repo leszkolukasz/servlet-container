@@ -1,5 +1,8 @@
 # Servlet container
 
+![license](https://img.shields.io/github/license/leszkolukasz/servlet-container?colorA=192330&colorB=c70039&style=for-the-badge)
+![status](https://img.shields.io/badge/status-finished-green?colorA=192330&colorB=00e600&style=for-the-badge)
+
 Servlet container działający podobnie jak Tomcat. Aplikacja musi być zapakowana do .war i przeniesiona do folderu `deploy` w  `server/src/main/resources`. Aplikacja będzie dostępna pod `localhost:8000/warName/`.
 
 ## Funkcjonalność
