@@ -1,10 +1,6 @@
-package servletcontainer;
+package servletcontainer.http;
 
 import org.junit.jupiter.api.Test;
-import servletcontainer.http.HttpServletDelegator;
-import servletcontainer.http.HttpServletRequestImp;
-import servletcontainer.http.HttpServletResponseImp;
-import servletcontainer.http.RequestDispatcherImp;
 import servletcontainer.servlet.ServletWrapper;
 
 import static org.junit.jupiter.api.Assertions.*;

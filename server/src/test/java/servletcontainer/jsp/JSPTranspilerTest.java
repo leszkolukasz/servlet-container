@@ -1,4 +1,4 @@
-package servletcontainer;
+package servletcontainer.jsp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import servletcontainer.http.HttpServletDelegator;
 import servletcontainer.http.HttpServletRequestImp;
 import servletcontainer.http.HttpServletResponseImp;
-import servletcontainer.jsp.JSPTranspiler;
 
 import javax.servlet.http.HttpServlet;
 import java.io.ByteArrayOutputStream;

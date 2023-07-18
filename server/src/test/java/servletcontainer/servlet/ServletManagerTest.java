@@ -1,9 +1,8 @@
-package servletcontainer;
+package servletcontainer.servlet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import servletcontainer.servlet.ServletManager;
-import servletcontainer.servlets.EmptyServlet;
+import servletcontainer.utils.EmptyServlet;
 
 import static org.junit.jupiter.api.Assertions.*;
 

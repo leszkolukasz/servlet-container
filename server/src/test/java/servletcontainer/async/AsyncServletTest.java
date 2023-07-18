@@ -1,11 +1,11 @@
-package servletcontainer;
+package servletcontainer.async;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import servletcontainer.servlet.ServletContainer;
-import servletcontainer.servlets.AsyncTimeoutServlet;
-import servletcontainer.servlets.EmptyServlet;
-import servletcontainer.servlets.SlowAsyncServlet;
+import servletcontainer.utils.AsyncTimeoutServlet;
+import servletcontainer.utils.EmptyServlet;
+import servletcontainer.utils.SlowAsyncServlet;
 
 import java.net.URI;
 import java.net.http.HttpClient;

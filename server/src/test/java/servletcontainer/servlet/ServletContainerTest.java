@@ -1,9 +1,8 @@
-package servletcontainer;
+package servletcontainer.servlet;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import servletcontainer.servlet.ServletContainer;
-import servletcontainer.servlets.SlowServlet;
+import servletcontainer.utils.SlowServlet;
 
 import java.io.IOException;
 import java.net.URI;

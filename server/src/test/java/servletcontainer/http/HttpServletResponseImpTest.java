@@ -1,11 +1,10 @@
-package servletcontainer;
+package servletcontainer.http;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import servletcontainer.http.HttpServletResponseImp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

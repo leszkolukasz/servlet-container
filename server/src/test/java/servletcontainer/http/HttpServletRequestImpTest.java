@@ -1,4 +1,4 @@
-package servletcontainer;
+package servletcontainer.http;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import servletcontainer.http.HttpServletRequestImp;
 import servletcontainer.servlet.ServletManager;
 
 import static org.mockito.Mockito.*;
@@ -20,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 class HttpServletRequestImpTest {
     @Mock
-    Socket socketMock;
+    private Socket socketMock;
     @Mock
-    ServletManager servletManagerMock;
+    private ServletManager servletManagerMock;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
