@@ -3,19 +3,19 @@
 ![license](https://img.shields.io/github/license/leszkolukasz/servlet-container?colorA=192330&colorB=c70039&style=for-the-badge)
 ![status](https://img.shields.io/badge/status-finished-green?colorA=192330&colorB=00e600&style=for-the-badge)
 
-This is a project that was created as part of a course I took at University of Warsaw. It is a simple implementation of a servlet container that supports Java servlets compliant with Java Servlet API. Even though it is quite barebone, it can load and run simple applications that use basic functionalities of servlets including dispatching, jsp and async servlets.
+This is a project that was created as part of a course I took at the University of Warsaw. It is a simple implementation of a servlet container that supports Java servlets compliant with Java Servlet API. Even though it is quite barebone, it can load and run simple applications that use basic functionalities of servlets including dispatching, JSP and async servlets.
 
-I did not find many other small implementations of servlet containers so feel free to use this as an example of how to create container like this. Keep in mind that due to time resctrictions it is a pretty imperfect, buggy project and while I tried to remain faithful to Servlet API I took some liberties here and there.
+I did not find many other small implementations of servlet containers so feel free to use this as an example of how to create a container like this. Keep in mind that due to time restrictions it is a pretty imperfect, buggy project and while I tried to remain faithful to Servlet API I took some liberties here and there.
 
 ## Assumptions
 
-The idea is that this container works in similar manner as tomcat. You can add servlet classes using ServletContainer::addRoute but preferred way it to use component scanning functionality. That is if application is packed into `warName.war` file and placed in `deploy` directory inside `server/src/main/resources` it will be loaded on server start and available under `localhost:8000/warName`.
+The idea is that this container works in a similar manner as Tomcat. You can add servlet classes using ServletContainer::addRoute but the preferred way is to use component scanning functionality. That is if the application is zipped into `warName.war` file and placed in `deploy` directory inside `server/src/main/resources` it will be loaded on the server start and available under `localhost:8000/warName`.
 
-By default server runs on port 8000. It can be changed in `Main` function. This function also contains example of how to start and configure this server.
+By default, the server runs on port 8000. It can be changed in `Main` function. This function also contains and example of how to start and configure this server.
 
 ## How to run
 
-Project was build using Gradle. It contains two subprojects: server and demo application (simple book database). It was tested under Linux and I do not know if it even works under Windows/MacOS.
+The project was built using Gradle. It contains two subprojects: server and demo application (simple book database). It was tested under Linux and I do not know if it even works under Windows/MacOS.
 
 To run server use:
 
@@ -25,10 +25,10 @@ To run server use:
 
 ## API
 
-Starting server requires us to create instance of `ServletContainer`.
+Starting server requires us to create an instance of `ServletContainer`.
 
 ### `ServletContainer(int threads)`
-Creates new isntance of `ServletContainer`. with given number of threads used to create ThreadPool. This pool will be used to handle http requests.
+Creates a new instance of `ServletContainer`. with given number of threads used to create ThreadPool. This pool will be used to handle HTTP requests.
 
 ### `void ServletContainer::start(int port)`
 
@@ -36,7 +36,7 @@ Starts servlet container on given port. Keep in mind that .war files are not loa
 
 ### `void ServletContainer::stop()`
 
-Gracefully stops container.
+Gracefully stops the container.
 
 ### `void ServletContainer::servletScan()`
 
@@ -44,11 +44,11 @@ Loads all .war files from `deploy` directory inside `server/src/main/resources`.
 
 ### `void ServletContainer::servletScan(String url)`
 
-Same as `ServletContainer::servletScan()` but can loads .war files from given url.
+Same as `ServletContainer::servletScan()` but can load .war files from given url.
 
 ### `void ServletContainer::addRoute(Class<? extends HttpServlet> cls, String path)`
 
-Adds servlet to container. Servlet will only handle given url (see **FAQ** for more details).
+Adds servlet to the container. Servlet will only handle given url (see **FAQ** for more details).
 
 ## Features
 
