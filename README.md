@@ -116,3 +116,7 @@ There are problems with socket ports being already in use. I never got down to f
 ### 3) Why it is possible for a servlet to handle url that it should not handle?
 
 Right now the resolution of which servlet should handle the given url is quite primitive. Basically given `url` server looks for a servlet whose `servletUrl` is a prefix of `url`. If there are many the one with the longest prefix is selected. This means that if a servlet has `servletUrl` equal to `/app/home` it will also handle `/app/home/nonexisting/`, `/app/home/12345` etc.
+
+## Contribution
+
+Anyone is welcome to contribute to this project. I created a few good-first-issue issues, so feel free to check them out :)
