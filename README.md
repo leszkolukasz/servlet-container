@@ -48,7 +48,7 @@ Same as `ServletContainer::servletScan()` but can loads .war files from given ur
 
 ### `void ServletContainer::addRoute(Class<? extends HttpServlet> cls, String path)`
 
-Adds servlet to container. Servlet will only handle given url (see **URL resolution** paragraph for more details).
+Adds servlet to container. Servlet will only handle given url (see **FAQ** for more details).
 
 ## Features
 
@@ -70,7 +70,7 @@ There is support for async servlets. After `HttpServletRequest::startAsync` is e
 
 ### Component scanning
 
-If the application has been zipped into .war and moved to the `deploy` folder, it will be loaded automatically. All classes annotated with `@WebServlet` and inheriting from `HttpServlet` will be added to the servlet container and will be available at `localhost:port/warName/servletUrl`. Each such class must have exactly one `servletUrl` specified in the `@WebServlet` annotation in the value attribute. If the application uses JSP it will be automatically compiled into .class and loaded.
+If the application has been zipped into .war and moved to the `deploy` folder, it will be loaded automatically. All classes annotated with `@WebServlet` and inheriting from `HttpServlet` will be added to the servlet container and will be available at `localhost:port/warName/servletUrl`. Each such class must have exactly one `servletUrl` specified in the `@WebServlet` annotation in the value attribute. If the application uses JSP it will be automatically compiled into .class and loaded. Many applications can be loaded, however, I do not know what happens when there are the same class names used in two applications.
 
 ### JSP
 
@@ -85,9 +85,6 @@ The server can transpile .jsp files to .class. There is support for almost all s
 
 `${}` syntax supports Expression Language. Simple arithmetic operations can be performed, and any expression of the form `instance.property1.property2` will be converted to `request.getAttribute("instance").getProperty1().getProperty2()`. In `<% ... %>` there is also `out.println(...)` which writes directly to the client. JSP can be displayed using `RequestDispatcher::forward` or is available directly at `localhost:8000/warName/jspFileName.jsp`. A sample jsp action is available at `localhost:8000/library/jsp`. Keep in mind that I implemented parsing myself so weird code formatting/syntax may break it.
 
-### FAQ
-why do everything manually
-
 ## Aplikacja bilbioteczna
 
 Do zaprezentowania działania serwera zaimplementowałem aplikacje biblioteczną. Frontend tworzony jest w pełni przy pomocy JSP. Aplikacja zapakowana jest do library.war i jest ładowana do serwera po jego uruchomieniu. Dostępne endpointy:
@@ -100,3 +97,17 @@ Do zaprezentowania działania serwera zaimplementowałem aplikacje biblioteczną
 ## Testy
 
 Jest ponad 30 testów sprawdzających większość funkcjonalności i aplikację biblioteczną.
+
+## FAQ
+
+### 1) Why all the parsing is done manually?
+   
+This project was part of a university course and I was not allowed to use any 3rd party libraries except for Junit.
+
+### 2) Why some tests fail?
+
+There are problems with socket ports being already in use. I never got down to fixing it but most of the time is works when run from Intellij.
+
+### 3) Why it is possible for servlet to handle url that it should not handle?
+
+Right now resolution of which servlet should handle given url is quite primimitive. Basically given `url` server looks for servlet whose `servletUrl` is a prefix of `url`. If there are many the one with longest match is selected. This means that if servlet has `servletUrl` equal to `/app/home` it will also handle `/app/home/nonexisting/`, `/app/home/12345` etc.
