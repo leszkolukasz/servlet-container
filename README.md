@@ -102,7 +102,7 @@ Endpoints:
 
 There are over 30 tests to check most of the functionality and the demo application. It is preferred to run them from Intellij due to problems explained in **FAQ**. Alternatively, they can be run using:
 ```
-../gradlew test
+./gradlew test
 ```
 
 ## FAQ
